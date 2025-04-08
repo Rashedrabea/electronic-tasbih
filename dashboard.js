@@ -467,79 +467,102 @@ document.addEventListener("mousemove", () => {
 document.addEventListener("DOMContentLoaded", updateDashboardStats);
 
 // تحديث معالجة التبويبات
-document.addEventListener("DOMContentLoaded", function() {
-    // معالجة التبويبات الرئيسية
-    const tabs = document.querySelectorAll('.tab-buttons .tab-btn');
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const target = this.getAttribute('data-tab');
-            const parent = this.closest('.dhikr-manager, .scripture-manager');
-            
-            // إزالة التفعيل من جميع الأزرار في نفس المجموعة
-            parent.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-            parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            
-            // تفعيل الزر والمحتوى المحدد
-            this.classList.add('active');
-            parent.querySelector(`#${target}-content`).classList.add('active');
-        });
+document.addEventListener("DOMContentLoaded", function () {
+  // معالجة التبويبات الرئيسية
+  const tabs = document.querySelectorAll(".tab-buttons .tab-btn");
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", function () {
+      const target = this.getAttribute("data-tab");
+      const parent = this.closest(".dhikr-manager, .scripture-manager");
+
+      // إزالة التفعيل من جميع الأزرار في نفس المجموعة
+      parent
+        .querySelectorAll(".tab-btn")
+        .forEach((t) => t.classList.remove("active"));
+      parent
+        .querySelectorAll(".tab-content")
+        .forEach((c) => c.classList.remove("active"));
+
+      // تفعيل الزر والمحتوى المحدد
+      this.classList.add("active");
+      parent.querySelector(`#${target}-content`).classList.add("active");
     });
+  });
 
-    // معالجة نماذج الإضافة
-    document.querySelectorAll('.add-form').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const type = this.closest('.tab-content').id.split('-')[0];
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData.entries());
+  // معالجة نماذج الإضافة
+  document.querySelectorAll(".add-form").forEach((form) => {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const type = this.closest(".tab-content").id.split("-")[0];
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
 
-            if (type === 'quran') {
-                saveQuranVerse(data);
-                loadQuranList(data.category);
-            } else if (type === 'hadith') {
-                saveHadith(data);
-                loadHadithList(data.category);
-            } else {
-                saveDhikr(type, data);
-                loadDhikrList(type);
-            }
+      if (type === "quran") {
+        saveQuranVerse(data);
+        loadQuranList(data.category);
+      } else if (type === "hadith") {
+        saveHadith(data);
+        loadHadithList(data.category);
+      } else {
+        saveDhikr(type, data);
+        loadDhikrList(type);
+      }
 
-            this.reset();
-        });
+      this.reset();
     });
+  });
 
-    // تحميل البيانات الأولية
-    loadDhikrList('morning');
-    loadQuranList('azkar');
-    loadHadithList('azkar');
+  // تحميل البيانات الأولية
+  loadDhikrList("morning");
+  loadQuranList("azkar");
+  loadHadithList("azkar");
 });
 
 function saveQuranVerse(data) {
-    const verses = JSON.parse(localStorage.getItem('quranVerses') || '{}');
-    if (!verses[data.category]) verses[data.category] = [];
-    verses[data.category].push({ ...data, id: Date.now() });
-    localStorage.setItem('quranVerses', JSON.stringify(verses));
+  const verses = JSON.parse(localStorage.getItem("quranVerses") || "{}");
+  if (!verses[data.category]) {
+    verses[data.category] = [];
+  }
+  verses[data.category].push({
+    ...data,
+    id: Date.now(),
+    timestamp: new Date().toISOString(),
+  });
+  localStorage.setItem("quranVerses", JSON.stringify(verses));
+  window.quranData = verses; // تحديث البيانات العالمية
+  alert("تمت إضافة الآية بنجاح");
 }
 
 function saveHadith(data) {
-    const hadiths = JSON.parse(localStorage.getItem('hadiths') || '{}');
-    if (!hadiths[data.category]) hadiths[data.category] = [];
-    hadiths[data.category].push({ ...data, id: Date.now() });
-    localStorage.setItem('hadiths', JSON.stringify(hadiths));
+  const hadiths = JSON.parse(localStorage.getItem("hadiths") || "{}");
+  if (!hadiths[data.category]) {
+    hadiths[data.category] = [];
+  }
+  hadiths[data.category].push({
+    ...data,
+    id: Date.now(),
+    timestamp: new Date().toISOString(),
+  });
+  localStorage.setItem("hadiths", JSON.stringify(hadiths));
+  window.hadithData = hadiths; // تحديث البيانات العالمية
+  alert("تم إضافة الحديث بنجاح");
 }
 
 function saveDhikr(type, data) {
-    const items = JSON.parse(localStorage.getItem(`${type}Items`) || '[]');
-    items.push({ ...data, id: Date.now() });
-    localStorage.setItem(`${type}Items`, JSON.stringify(items));
+  const items = JSON.parse(localStorage.getItem(`${type}Items`) || "[]");
+  items.push({ ...data, id: Date.now() });
+  localStorage.setItem(`${type}Items`, JSON.stringify(items));
 }
 
 function loadQuranList(category) {
-    const verses = JSON.parse(localStorage.getItem('quranVerses') || '{}');
-    const list = verses[category] || [];
-    const container = document.getElementById('quranList');
-    
-    container.innerHTML = list.length ? list.map(verse => `
+  const verses = JSON.parse(localStorage.getItem("quranVerses") || "{}");
+  const list = verses[category] || [];
+  const container = document.getElementById("quranList");
+
+  container.innerHTML = list.length
+    ? list
+        .map(
+          (verse) => `
         <div class="item-card">
             <div class="text">${verse.text}</div>
             <div class="info">${verse.reference}</div>
@@ -547,15 +570,21 @@ function loadQuranList(category) {
                 <button onclick="deleteQuranVerse('${category}', ${verse.id})">حذف</button>
             </div>
         </div>
-    `).join('') : '<div class="empty-message">لا توجد آيات في هذا القسم</div>';
+    `
+        )
+        .join("")
+    : '<div class="empty-message">لا توجد آيات في هذا القسم</div>';
 }
 
 function loadHadithList(category) {
-    const hadiths = JSON.parse(localStorage.getItem('hadiths') || '{}');
-    const list = hadiths[category] || [];
-    const container = document.getElementById('hadithList');
-    
-    container.innerHTML = list.length ? list.map(hadith => `
+  const hadiths = JSON.parse(localStorage.getItem("hadiths") || "{}");
+  const list = hadiths[category] || [];
+  const container = document.getElementById("hadithList");
+
+  container.innerHTML = list.length
+    ? list
+        .map(
+          (hadith) => `
         <div class="item-card">
             <div class="text">${hadith.text}</div>
             <div class="info">
@@ -566,28 +595,79 @@ function loadHadithList(category) {
                 <button onclick="deleteHadith('${category}', ${hadith.id})">حذف</button>
             </div>
         </div>
-    `).join('') : '<div class="empty-message">لا توجد أحاديث في هذا القسم</div>';
+    `
+        )
+        .join("")
+    : '<div class="empty-message">لا توجد أحاديث في هذا القسم</div>';
 }
 
 // إضافة دوال الحذف
-window.deleteQuranVerse = function(category, id) {
-    if (!confirm('هل أنت متأكد من حذف هذه الآية؟')) return;
-    
-    const verses = JSON.parse(localStorage.getItem('quranVerses') || '{}');
-    if (verses[category]) {
-        verses[category] = verses[category].filter(v => v.id !== id);
-        localStorage.setItem('quranVerses', JSON.stringify(verses));
-        loadQuranList(category);
-    }
+window.deleteQuranVerse = function (category, id) {
+  if (!confirm("هل أنت متأكد من حذف هذه الآية؟")) return;
+
+  const verses = JSON.parse(localStorage.getItem("quranVerses") || "{}");
+  if (verses[category]) {
+    verses[category] = verses[category].filter((v) => v.id !== id);
+    localStorage.setItem("quranVerses", JSON.stringify(verses));
+    loadQuranList(category);
+  }
 };
 
-window.deleteHadith = function(category, id) {
-    if (!confirm('هل أنت متأكد من حذف هذا الحديث؟')) return;
-    
-    const hadiths = JSON.parse(localStorage.getItem('hadiths') || '{}');
-    if (hadiths[category]) {
-        hadiths[category] = hadiths[category].filter(h => h.id !== id);
-        localStorage.setItem('hadiths', JSON.stringify(hadiths));
-        loadHadithList(category);
-    }
+window.deleteHadith = function (category, id) {
+  if (!confirm("هل أنت متأكد من حذف هذا الحديث؟")) return;
+
+  const hadiths = JSON.parse(localStorage.getItem("hadiths") || "{}");
+  if (hadiths[category]) {
+    hadiths[category] = hadiths[category].filter((h) => h.id !== id);
+    localStorage.setItem("hadiths", JSON.stringify(hadiths));
+    loadHadithList(category);
+  }
 };
+
+// إضافة معالج تحديث الصورة
+document.addEventListener("DOMContentLoaded", function () {
+  // تحميل الصورة الحالية
+  const currentLogo = document.getElementById("currentLogo");
+  const savedLogo = localStorage.getItem("siteLogo");
+  if (savedLogo) {
+    currentLogo.src = savedLogo;
+  } else {
+    currentLogo.src = "../images/jkkl.jpg"; // الصورة الافتراضية
+  }
+
+  // معالجة تحديث الصورة
+  document.getElementById("logoForm")?.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const fileInput = document.getElementById("newLogo");
+    const file = fileInput.files[0];
+
+    if (file) {
+      if (file.size > 500000) {
+        // التحقق من حجم الملف (500KB)
+        alert("حجم الصورة كبير جداً. يرجى اختيار صورة أصغر");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = new Image();
+        img.onload = function () {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          // تحجيم الصورة إلى 60x60
+          canvas.width = 60;
+          canvas.height = 60;
+          ctx.drawImage(img, 0, 0, 60, 60);
+
+          const resizedImage = canvas.toDataURL("image/jpeg", 0.8);
+          localStorage.setItem("siteLogo", resizedImage);
+          document.getElementById("currentLogo").src = resizedImage;
+          alert("تم تحديث الصورة بنجاح");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+});

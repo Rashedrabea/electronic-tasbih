@@ -548,3 +548,42 @@ select:focus {
     font-size: 0.9em;
     margin-top: 10px;
 }
+
+/* تنسيقات إدارة الصورة */
+.site-logo-manager {
+    padding: 20px;
+    background: var(--stats-bg);
+    border-radius: 10px;
+}
+
+.current-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.site-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid var(--dashboard-primary);
+    margin: 15px 0;
+    object-fit: cover;
+}
+
+.logo-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.logo-form input[type="file"] {
+    padding: 10px;
+    border: 2px dashed var(--dashboard-accent);
+    border-radius: 8px;
+    background: var(--card-color);
+}
+
+.logo-form small {
+    color: var(--dashboard-accent);
+    font-size: 0.9em;
+}
