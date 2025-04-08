@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,19 +13,22 @@
             padding: 20px;
             background: var(--card-color);
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
+
         .login-form {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
+
         .login-form input {
             padding: 12px;
             border: 2px solid var(--primary-color);
             border-radius: 8px;
             font-size: 1rem;
         }
+
         .login-form button {
             background: var(--primary-color);
             color: white;
@@ -34,6 +38,7 @@
             cursor: pointer;
             font-size: 1rem;
         }
+
         .error-message {
             color: #e74c3c;
             text-align: center;
@@ -41,6 +46,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <h2 style="text-align: center; color: var(--primary-color);">تسجيل الدخول للوحة التحكم</h2>
@@ -53,11 +59,11 @@
     </div>
 
     <script>
-        document.getElementById('loginForm').onsubmit = function(e) {
+        document.getElementById('loginForm').onsubmit = function (e) {
             e.preventDefault();
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            
+
             // بيانات تسجيل الدخول الجديدة
             if (username === "rashedrabee" && password === "Rashed@2024") {
                 localStorage.setItem('isLoggedIn', 'true');
@@ -68,4 +74,5 @@
         };
     </script>
 </body>
+
 </html>

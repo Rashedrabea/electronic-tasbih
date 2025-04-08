@@ -1,13 +1,21 @@
 /* ألوان جديدة للوحة التحكم */
 :root {
-    --dashboard-primary: #4a90e2;    /* أزرق فاتح */
-    --dashboard-secondary: #2ecc71;   /* أخضر منعش */
-    --dashboard-accent: #3498db;      /* أزرق مشرق */
-    --stats-bg: #f0f7ff;             /* خلفية زرقاء فاتحة */
-    --success-color: #27ae60;         /* أخضر داكن */
-    --warning-color: #f39c12;         /* برتقالي */
-    --gradient-start: #4a90e2;        /* تدرج أزرق */
-    --gradient-end: #2ecc71;          /* تدرج أخضر */
+    --dashboard-primary: #4a90e2;
+    /* أزرق فاتح */
+    --dashboard-secondary: #2ecc71;
+    /* أخضر منعش */
+    --dashboard-accent: #3498db;
+    /* أزرق مشرق */
+    --stats-bg: #f0f7ff;
+    /* خلفية زرقاء فاتحة */
+    --success-color: #27ae60;
+    /* أخضر داكن */
+    --warning-color: #f39c12;
+    /* برتقالي */
+    --gradient-start: #4a90e2;
+    /* تدرج أزرق */
+    --gradient-end: #2ecc71;
+    /* تدرج أخضر */
 }
 
 .dark-mode {
@@ -32,7 +40,7 @@
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
     color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-grid {
@@ -45,8 +53,8 @@
     background: var(--card-color);
     border-radius: 10px;
     padding: 20px;
-    border: 1px solid rgba(0,0,0,0.1);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
     z-index: 1;
@@ -54,7 +62,7 @@
 
 .dashboard-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .stats-grid {
@@ -130,7 +138,7 @@
 
 .setting-item:hover {
     transform: scale(1.02);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .reports-panel {
@@ -139,7 +147,7 @@
     background: var(--card-color);
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .report-header {
@@ -158,7 +166,7 @@
     flex-wrap: wrap;
 }
 
-.report-filters select, 
+.report-filters select,
 .report-filters input {
     padding: 8px 15px;
     border: 2px solid var(--dashboard-accent);
@@ -188,7 +196,7 @@
 
 .report-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .report-summary {
@@ -251,25 +259,27 @@
     text-decoration: none;
     padding: 8px 15px;
     border-radius: 5px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     transition: background-color 0.3s;
 }
 
 .nav-link:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
 }
 
 /* تنسيق الإدخالات */
-input, select {
+input,
+select {
     padding: 8px 15px;
-    border: 2px solid rgba(0,0,0,0.1);
+    border: 2px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     transition: all 0.3s;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     border-color: var(--dashboard-accent);
     outline: none;
     box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
@@ -322,7 +332,7 @@ input:focus, select:focus {
     background: linear-gradient(145deg, var(--stats-bg), var(--card-color));
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -358,7 +368,7 @@ input:focus, select:focus {
     transform: translateY(-2px);
 }
 
-.form-group input, 
+.form-group input,
 .form-group select {
     margin-bottom: 10px;
 }
@@ -385,7 +395,7 @@ input:focus, select:focus {
 
 .add-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .add-button:active {
@@ -490,4 +500,51 @@ input:focus, select:focus {
     opacity: 0.7;
     font-size: 0.8em;
     margin-top: 5px;
+}
+
+.scripture-manager {
+    background: var(--card-color);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.scripture-manager .add-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.scripture-manager textarea {
+    min-height: 100px;
+    resize: vertical;
+    padding: 10px;
+}
+
+.scripture-manager .items-list {
+    display: grid;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.verse-item,
+.hadith-item {
+    background: var(--bg-color);
+    padding: 15px;
+    border-radius: 8px;
+    border-right: 4px solid var(--primary-color);
+}
+
+.verse-item .text,
+.hadith-item .text {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
+.verse-item .info,
+.hadith-item .info {
+    color: var(--secondary-color);
+    font-size: 0.9em;
+    margin-top: 10px;
 }

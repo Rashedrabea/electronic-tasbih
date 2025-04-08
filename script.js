@@ -1,12 +1,13 @@
-window.onload = function() {
-    const fallbackBanner = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjUiIHN0cm9rZT0iIzRhOTBlMiIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIi8+CiAgPHRleHQgeD0iMzAiIHk9IjM1IiBmb250LXNpemU9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNGE5MGUyIj7wn5OPIDwvdGV4dD4KPC9zdmc+';
-    
-    const bannerImg = document.querySelector('.banner-img');
-    if (bannerImg) {
-        bannerImg.onerror = function() {
-            this.src = fallbackBanner;
-        };
-    }
+window.onload = function () {
+  const fallbackBanner =
+    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjUiIHN0cm9rZT0iIzRhOTBlMiIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIi8+CiAgPHRleHQgeD0iMzAiIHk9IjM1IiBmb250LXNpemU9IjIwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNGE5MGUyIj7wn5OPIDwvdGV4dD4KPC9zdmc+";
+
+  const bannerImg = document.querySelector(".banner-img");
+  if (bannerImg) {
+    bannerImg.onerror = function () {
+      this.src = fallbackBanner;
+    };
+  }
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -96,31 +97,36 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // إضافة متغيرات الإحصائيات الجديدة
-  let dhikrStats = JSON.parse(localStorage.getItem('dhikrStats') || '{}');
-  let totalCount = parseInt(localStorage.getItem('totalCount') || '0');
+  let dhikrStats = JSON.parse(localStorage.getItem("dhikrStats") || "{}");
+  let totalCount = parseInt(localStorage.getItem("totalCount") || "0");
 
   function updateStats() {
     // تحديث العدادات
-    document.getElementById('dailyCount').textContent = dailyCount;
-    document.getElementById('lastDhikr').textContent = currentDhikr || '-';
-    document.getElementById('totalCount').textContent = totalCount;
-    
+    document.getElementById("dailyCount").textContent = dailyCount;
+    document.getElementById("lastDhikr").textContent = currentDhikr || "-";
+    document.getElementById("totalCount").textContent = totalCount;
+
     // تحديث أكثر ذكر تكراراً
     const mostUsed = Object.entries(dhikrStats).sort((a, b) => b[1] - a[1])[0];
-    document.getElementById('mostUsedDhikr').textContent = 
-      mostUsed ? `${mostUsed[0]} (${mostUsed[1]} مرة)` : '-';
+    document.getElementById("mostUsedDhikr").textContent = mostUsed
+      ? `${mostUsed[0]} (${mostUsed[1]} مرة)`
+      : "-";
 
     // تحديث وقت آخر تسبيحة
     const now = new Date();
-    document.getElementById('lastUpdate').textContent = 
-      `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+    document.getElementById(
+      "lastUpdate"
+    ).textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(
+      2,
+      "0"
+    )}`;
 
     // حفظ البيانات
-    localStorage.setItem('dailyCount', dailyCount);
-    localStorage.setItem('lastDhikr', currentDhikr);
-    localStorage.setItem('dhikrStats', JSON.stringify(dhikrStats));
-    localStorage.setItem('totalCount', totalCount);
-    localStorage.setItem('lastUpdate', now.toISOString());
+    localStorage.setItem("dailyCount", dailyCount);
+    localStorage.setItem("lastDhikr", currentDhikr);
+    localStorage.setItem("dhikrStats", JSON.stringify(dhikrStats));
+    localStorage.setItem("totalCount", totalCount);
+    localStorage.setItem("lastUpdate", now.toISOString());
   }
 
   window.increment = function () {
@@ -181,8 +187,8 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // إضافة دالة لإعادة تعيين الإحصائيات
-  window.resetStats = function() {
-    if (confirm('هل تريد إعادة تعيين جميع الإحصائيات؟')) {
+  window.resetStats = function () {
+    if (confirm("هل تريد إعادة تعيين جميع الإحصائيات؟")) {
       dailyCount = 0;
       totalCount = 0;
       dhikrStats = {};
@@ -268,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const lastVolume = localStorage.getItem("radioVolume") || 50;
   volumeSlider.value = lastVolume;
-  quranRadio.volume = isSoundEnabled ? (lastVolume / 100) : 0;
+  quranRadio.volume = isSoundEnabled ? lastVolume / 100 : 0;
 
   // وظائف الراديو
   window.toggleRadio = function () {
@@ -299,7 +305,8 @@ document.addEventListener("DOMContentLoaded", function () {
     quranRadio.src = station;
     localStorage.setItem("lastStation", station);
     if (isPlaying) {
-      quranRadio.play()
+      quranRadio
+        .play()
         .then(() => (radioIcon.textContent = "⏸️"))
         .catch(() => {
           isPlaying = false;
@@ -323,154 +330,176 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // إضافة مستمعي الأحداث للتغيير في القوائم المنسدلة
-  document.getElementById('quranCategory').addEventListener('change', function() {
-    loadQuranVerses(this.value);
-  });
+  document
+    .getElementById("quranCategory")
+    .addEventListener("change", function () {
+      loadQuranVerses(this.value);
+    });
 
-  document.getElementById('hadithCategory').addEventListener('change', function() {
-    loadHadith(this.value);
-  });
+  document
+    .getElementById("hadithCategory")
+    .addEventListener("change", function () {
+      loadHadith(this.value);
+    });
 
   function loadQuranVerses(category) {
+    console.log("Loading Quran verses for category:", category);
+    console.log("Available data:", window.quranData);
+
     const verses = window.quranData[category] || [];
-    const container = document.getElementById('quranVerses');
-    if (verses.length === 0) {
-        container.innerHTML = '<div class="empty-message">لا توجد آيات متوفرة في هذا القسم</div>';
-        return;
+    const container = document.getElementById("quranVerses");
+
+    if (!verses || verses.length === 0) {
+      container.innerHTML =
+        '<div class="empty-message">لا توجد آيات متوفرة في هذا القسم</div>';
+      return;
     }
 
-    container.innerHTML = verses.map(verse => `
+    container.innerHTML = verses
+      .map(
+        (verse) => `
         <div class="verse-card">
             <div class="verse-text">${verse.text}</div>
             <div class="verse-info">
                 <span class="verse-reference">${verse.reference}</span>
-                ${verse.time ? `<span class="verse-time">${verse.time}</span>` : ''}
+                ${
+                  verse.time
+                    ? `<span class="verse-time">${verse.time}</span>`
+                    : ""
+                }
             </div>
             <div class="verse-tafsir">${verse.tafsir}</div>
-            <button class="share-btn" onclick="shareVerse('${verse.text}', '${verse.reference}')">
-                مشاركة ⬅️
-            </button>
         </div>
-    `).join('');
+    `
+      )
+      .join("");
   }
 
   function loadHadith(category) {
+    console.log("Loading Hadiths for category:", category);
+    console.log("Available data:", window.hadithData);
+
     const hadiths = window.hadithData[category] || [];
-    const container = document.getElementById('hadithList');
-    if (hadiths.length === 0) {
-        container.innerHTML = '<div class="empty-message">لا توجد أحاديث متوفرة في هذا القسم</div>';
-        return;
+    const container = document.getElementById("hadithList");
+
+    if (!hadiths || hadiths.length === 0) {
+      container.innerHTML =
+        '<div class="empty-message">لا توجد أحاديث متوفرة في هذا القسم</div>';
+      return;
     }
 
-    container.innerHTML = hadiths.map(hadith => `
+    container.innerHTML = hadiths
+      .map(
+        (hadith) => `
         <div class="hadith-card">
             <div class="hadith-text">${hadith.text}</div>
             <div class="hadith-info">
                 <span class="narrator">الراوي: ${hadith.narrator}</span>
                 <span class="source">المصدر: ${hadith.source}</span>
-                <span class="book">الكتاب: ${hadith.book}</span>
-                <span class="number">رقم: ${hadith.number}</span>
                 <span class="grade">الدرجة: ${hadith.grade}</span>
-                ${hadith.time ? `<span class="time">الوقت: ${hadith.time}</span>` : ''}
             </div>
-            ${hadith.explanation ? `
-                <div class="hadith-explanation">${hadith.explanation}</div>
-            ` : ''}
-            <button class="share-btn" onclick="shareHadith('${hadith.text}', '${hadith.source}')">
-                مشاركة ⬅️
-            </button>
         </div>
-    `).join('');
+    `
+      )
+      .join("");
   }
 
-  window.shareVerse = function(text, reference) {
+  window.shareVerse = function (text, reference) {
     shareContent(`${text}\n[${reference}]`);
-  }
+  };
 
-  window.shareHadith = function(text, narrator) {
+  window.shareHadith = function (text, narrator) {
     shareContent(`${text}\n[${narrator}]`);
-  }
+  };
 
   function shareContent(text) {
     if (navigator.share) {
-        navigator.share({
-            text: text
-        }).catch(console.error);
+      navigator
+        .share({
+          text: text,
+        })
+        .catch(console.error);
     } else {
-        navigator.clipboard.writeText(text)
-            .then(() => alert('تم النسخ إلى الحافظة'))
-            .catch(() => alert('حدث خطأ في النسخ'));
+      navigator.clipboard
+        .writeText(text)
+        .then(() => alert("تم النسخ إلى الحافظة"))
+        .catch(() => alert("حدث خطأ في النسخ"));
     }
   }
 
   // إضافة زر العودة للأعلى
-  window.onscroll = function() {
-    const scrollBtn = document.querySelector('.scroll-top');
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        scrollBtn.classList.add('visible');
+  window.onscroll = function () {
+    const scrollBtn = document.querySelector(".scroll-top");
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      scrollBtn.classList.add("visible");
     } else {
-        scrollBtn.classList.remove('visible');
+      scrollBtn.classList.remove("visible");
     }
   };
 
-  window.scrollToTop = function() {
+  window.scrollToTop = function () {
     window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+      top: 0,
+      behavior: "smooth",
     });
   };
 
   // وظائف الذكر السريع
-  window.showQuickDhikr = function() {
-    const modal = document.getElementById('quickDhikrModal');
+  window.showQuickDhikr = function () {
+    const modal = document.getElementById("quickDhikrModal");
     if (modal) {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
     }
   };
 
-  window.closeQuickDhikr = function() {
-    const modal = document.getElementById('quickDhikrModal');
+  window.closeQuickDhikr = function () {
+    const modal = document.getElementById("quickDhikrModal");
     if (modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
+      modal.style.display = "none";
+      document.body.style.overflow = "";
     }
   };
 
-  window.quickDhikr = function(target) {
+  window.quickDhikr = function (target) {
     let progress = 0;
     count = 0;
     updateCounter();
-    
-    const progressBar = document.querySelector('.progress-bar');
-    progressBar.style.width = '0%';
+
+    const progressBar = document.querySelector(".progress-bar");
+    progressBar.style.width = "0%";
 
     const interval = setInterval(() => {
-        if (count < target) {
-            increment();
-            progress = (count / target) * 100;
-            progressBar.style.width = progress + '%';
-        } else {
-            clearInterval(interval);
-            playSound("complete");
-            progressBar.style.width = '100%';
-            
-            // إظهار رسالة الإكمال
-            setTimeout(() => {
-                alert('تم إكمال الذكر بنجاح');
-                closeQuickDhikr();
-                progressBar.style.width = '0%';
-            }, 1000);
-        }
+      if (count < target) {
+        increment();
+        progress = (count / target) * 100;
+        progressBar.style.width = progress + "%";
+      } else {
+        clearInterval(interval);
+        playSound("complete");
+        progressBar.style.width = "100%";
+
+        // إظهار رسالة الإكمال
+        setTimeout(() => {
+          alert("تم إكمال الذكر بنجاح");
+          closeQuickDhikr();
+          progressBar.style.width = "0%";
+        }, 1000);
+      }
     }, 1000);
   };
 
   // إضافة مستمع لإغلاق النافذة عند النقر خارجها
-  document.querySelector('.quick-dhikr-modal').addEventListener('click', function(e) {
-    if (e.target === this) {
+  document
+    .querySelector(".quick-dhikr-modal")
+    .addEventListener("click", function (e) {
+      if (e.target === this) {
         closeQuickDhikr();
-    }
-  });
+      }
+    });
 
   // تهيئة الحالة الأولية
   const isDark = localStorage.getItem("darkMode") === "true";
@@ -481,11 +510,14 @@ document.addEventListener("DOMContentLoaded", function () {
   displayDhikrs("morning");
 
   // تحميل وقت آخر تحديث عند بدء التطبيق
-  const lastUpdateTime = localStorage.getItem('lastUpdate');
+  const lastUpdateTime = localStorage.getItem("lastUpdate");
   if (lastUpdateTime) {
     const lastUpdate = new Date(lastUpdateTime);
-    document.getElementById('lastUpdate').textContent = 
-      `${lastUpdate.getHours()}:${String(lastUpdate.getMinutes()).padStart(2, '0')}`;
+    document.getElementById(
+      "lastUpdate"
+    ).textContent = `${lastUpdate.getHours()}:${String(
+      lastUpdate.getMinutes()
+    ).padStart(2, "0")}`;
   }
 
   // تهيئة زر الصوت
@@ -498,98 +530,115 @@ document.addEventListener("DOMContentLoaded", function () {
   updateStats();
 
   // تأكيد أن البيانات الدينية موجودة
-  if (typeof window.quranData === 'undefined') {
-      window.quranData = { azkar: [], morning: [], evening: [] };
+  if (typeof window.quranData === "undefined") {
+    window.quranData = { azkar: [], morning: [], evening: [] };
   }
-  if (typeof window.hadithData === 'undefined') {
-      window.hadithData = { azkar: [], morning: [], evening: [] };
+  if (typeof window.hadithData === "undefined") {
+    window.hadithData = { azkar: [], morning: [], evening: [] };
   }
 
   // تحديث دالة initializeScriptureTabs
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener("DOMContentLoaded", function () {
     // تهيئة التبويبات
-    const tabButtons = document.querySelectorAll('.scripture-tabs .tab-btn');
-    tabButtons.forEach(button => {
-        button.onclick = function() {
-            const tabName = this.getAttribute('data-tab');
-            
-            // إزالة التفعيل من جميع الأزرار والمحتويات
-            document.querySelectorAll('.tab-btn').forEach(btn => 
-                btn.classList.remove('active')
-            );
-            document.querySelectorAll('.tab-content').forEach(content => 
-                content.classList.remove('active')
-            );
-            
-            // تفعيل الزر والمحتوى المحدد
-            this.classList.add('active');
-            document.getElementById(`${tabName}-content`).classList.add('active');
-            
-            // تحديث المحتوى
-            if (tabName === 'quran') {
-                loadQuranVerses(document.getElementById('quranCategory').value);
-            } else if (tabName === 'hadith') {
-                loadHadith(document.getElementById('hadithCategory').value);
-            }
-        };
+    const tabButtons = document.querySelectorAll(".scripture-tabs .tab-btn");
+    tabButtons.forEach((button) => {
+      button.onclick = function () {
+        const tabName = this.getAttribute("data-tab");
+
+        // إزالة التفعيل من جميع الأزرار والمحتويات
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((content) => content.classList.remove("active"));
+
+        // تفعيل الزر والمحتوى المحدد
+        this.classList.add("active");
+        document.getElementById(`${tabName}-content`).classList.add("active");
+
+        // تحديث المحتوى
+        if (tabName === "quran") {
+          loadQuranVerses(document.getElementById("quranCategory").value);
+        } else if (tabName === "hadith") {
+          loadHadith(document.getElementById("hadithCategory").value);
+        }
+      };
     });
 
     // تحميل البيانات الأولية
-    loadQuranVerses('azkar');
+    loadQuranVerses("azkar");
+    loadHadith("azkar");
   });
 
   function initializeTabs() {
-    const tabButtons = document.querySelectorAll('.scripture-tabs .tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
+    const tabButtons = document.querySelectorAll(".scripture-tabs .tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
 
-    tabButtons.forEach(button => {
-        button.onclick = function() {
-            // إزالة الفئة النشطة من جميع الأزرار والمحتويات
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
-            
-            // إضافة الفئة النشطة للعنصر المحدد
-            this.classList.add('active');
-            const targetId = this.getAttribute('data-tab') + '-content';
-            document.getElementById(targetId).classList.add('active');
-            
-            // تحميل المحتوى المناسب
-            if (this.getAttribute('data-tab') === 'quran') {
-                loadQuranVerses(document.getElementById('quranCategory').value);
-            } else if (this.getAttribute('data-tab') === 'hadith') {
-                loadHadith(document.getElementById('hadithCategory').value);
-            }
-        };
+    tabButtons.forEach((button) => {
+      button.onclick = function () {
+        // إزالة الفئة النشطة من جميع الأزرار والمحتويات
+        tabButtons.forEach((btn) => btn.classList.remove("active"));
+        tabContents.forEach((content) => content.classList.remove("active"));
+
+        // إضافة الفئة النشطة للعنصر المحدد
+        this.classList.add("active");
+        const targetId = this.getAttribute("data-tab") + "-content";
+        document.getElementById(targetId).classList.add("active");
+
+        // تحميل المحتوى المناسب
+        if (this.getAttribute("data-tab") === "quran") {
+          loadQuranVerses(document.getElementById("quranCategory").value);
+        } else if (this.getAttribute("data-tab") === "hadith") {
+          loadHadith(document.getElementById("hadithCategory").value);
+        }
+      };
     });
   }
 
   initializeTabs();
 
   // إضافة وظائف المشاركة
-  window.shareApp = function(platform) {
+  window.shareApp = function (platform) {
     const appUrl = window.location.href;
     const text = `المسبحة الإلكترونية - تطبيق للتسبيح والأذكار\n${appUrl}`;
-    
-    switch(platform) {
-        case 'whatsapp':
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
-            break;
-        case 'telegram':
-            window.open(`https://t.me/share/url?url=${encodeURIComponent(appUrl)}&text=${encodeURIComponent(text)}`, '_blank');
-            break;
-        case 'facebook':
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(appUrl)}`, '_blank');
-            break;
+
+    switch (platform) {
+      case "whatsapp":
+        window.open(
+          `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`,
+          "_blank"
+        );
+        break;
+      case "telegram":
+        window.open(
+          `https://t.me/share/url?url=${encodeURIComponent(
+            appUrl
+          )}&text=${encodeURIComponent(text)}`,
+          "_blank"
+        );
+        break;
+      case "facebook":
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            appUrl
+          )}`,
+          "_blank"
+        );
+        break;
     }
-  }
+  };
 
   // دالة لنسخ الرابط
-  window.copyLink = function() {
+  window.copyLink = function () {
     const appUrl = window.location.href;
-    navigator.clipboard.writeText(appUrl).then(() => {
-        alert('تم نسخ الرابط بنجاح');
-    }).catch(() => {
-        alert('حدث خطأ في نسخ الرابط');
-    });
-  }
+    navigator.clipboard
+      .writeText(appUrl)
+      .then(() => {
+        alert("تم نسخ الرابط بنجاح");
+      })
+      .catch(() => {
+        alert("حدث خطأ في نسخ الرابط");
+      });
+  };
 });

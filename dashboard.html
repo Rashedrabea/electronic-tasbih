@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
         }
     </script>
 </head>
+
 <body>
     <div class="dashboard-container">
         <nav class="dashboard-nav">
@@ -22,7 +24,7 @@
                 <button onclick="logout()" class="nav-link">تسجيل خروج</button>
             </div>
         </nav>
-        
+
         <div class="dashboard-grid">
             <!-- إحصائيات عامة -->
             <div class="dashboard-card">
@@ -52,7 +54,7 @@
                         <button class="tab-btn" data-tab="evening">أذكار المساء</button>
                         <button class="tab-btn" data-tab="hadith">الأحاديث النبوية</button>
                     </div>
-                    
+
                     <div class="tab-content active" id="morning-content">
                         <form class="add-form">
                             <div class="form-group">
@@ -95,6 +97,57 @@
                 </div>
             </div>
 
+            <!-- إدارة القرآن والأحاديث -->
+            <div class="dashboard-card">
+                <h2>إدارة القرآن والأحاديث</h2>
+                <div class="scripture-manager">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="quran">الآيات القرآنية</button>
+                        <button class="tab-btn" data-tab="hadith">الأحاديث النبوية</button>
+                    </div>
+
+                    <!-- قسم الآيات -->
+                    <div class="tab-content active" id="quran-content">
+                        <form class="add-form" id="quranForm">
+                            <select name="category" required>
+                                <option value="">اختر التصنيف</option>
+                                <option value="azkar">آيات الأذكار</option>
+                                <option value="morning">آيات الصباح</option>
+                                <option value="evening">آيات المساء</option>
+                            </select>
+                            <textarea name="text" placeholder="نص الآية" required></textarea>
+                            <input type="text" name="reference" placeholder="السورة ورقم الآية" required>
+                            <textarea name="tafsir" placeholder="التفسير المختصر"></textarea>
+                            <button type="submit">إضافة آية</button>
+                        </form>
+                        <div id="quranList" class="items-list"></div>
+                    </div>
+
+                    <!-- قسم الأحاديث -->
+                    <div class="tab-content" id="hadith-content">
+                        <form class="add-form" id="hadithForm">
+                            <select name="category" required>
+                                <option value="">اختر التصنيف</option>
+                                <option value="azkar">أحاديث الأذكار</option>
+                                <option value="morning">أحاديث الصباح</option>
+                                <option value="evening">أحاديث المساء</option>
+                            </select>
+                            <textarea name="text" placeholder="نص الحديث" required></textarea>
+                            <input type="text" name="narrator" placeholder="الراوي" required>
+                            <input type="text" name="source" placeholder="المصدر" required>
+                            <select name="grade" required>
+                                <option value="">درجة الحديث</option>
+                                <option value="صحيح">صحيح</option>
+                                <option value="حسن">حسن</option>
+                                <option value="ضعيف">ضعيف</option>
+                            </select>
+                            <button type="submit">إضافة حديث</button>
+                        </form>
+                        <div id="hadithList" class="items-list"></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- الإعدادات -->
             <div class="dashboard-card">
                 <h2>الإعدادات</h2>
@@ -108,7 +161,8 @@
                         <form id="passwordForm" class="setting-form">
                             <input type="password" id="currentPassword" placeholder="كلمة المرور الحالية" required>
                             <input type="password" id="newPassword" placeholder="كلمة المرور الجديدة" required>
-                            <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور الجديدة" required>
+                            <input type="password" id="confirmPassword" placeholder="تأكيد كلمة المرور الجديدة"
+                                required>
                             <button type="submit" class="save-btn">حفظ كلمة المرور</button>
                         </form>
                     </div>
@@ -176,7 +230,7 @@
             </div>
         </div>
     </div>
-    
+
     <footer class="copyright">
         <div class="copyright-content">
             <p>حقوق الملكية الفكرية © 2024</p>
@@ -192,4 +246,5 @@
     <script src="data/religious-data.js"></script>
     <script src="dashboard.js"></script>
 </body>
+
 </html>

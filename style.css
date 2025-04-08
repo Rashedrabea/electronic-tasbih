@@ -58,15 +58,39 @@ body {
     grid-column: 1 / -1;
     width: 100%;
     margin: 0 0 20px 0;
+    position: relative;
 }
 
-.banner-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50px;
+.admin-btn {
+    position: absolute;
+    left: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.admin-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.banner-emoji {
+    font-size: 3rem;
     margin-left: 15px;
-    object-fit: cover;
-    border: 2px solid white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* حذف التنسيقات القديمة للصورة */
+.banner-img {
+    display: none;
 }
 
 /* تصميم اعداد */
@@ -201,7 +225,6 @@ body {
     position: fixed;
     top: 20px;
     left: 30px;
-    /* تغيير من 20px إلى 150px */
     padding: 10px;
     border-radius: 50%;
     width: 45px;
@@ -209,13 +232,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 999;
 }
 
 .btn.sound-toggle {
     position: fixed;
     top: 20px;
-    left: 80px;
-    /* تغيير من 80px إلى 210px */
+    left: 75px;
     padding: 10px;
     border-radius: 50%;
     width: 45px;
@@ -223,6 +246,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 999;
 }
 
 .stats {
@@ -454,7 +478,7 @@ body {
     opacity: 1;
 }
 
-/* تنسيقات الذكر السريع */
+/* تحسينات نافذة الذكر السريع للموبايل */
 .quick-dhikr-modal {
     display: none;
     position: fixed;
@@ -462,10 +486,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 9999;
+    padding: 20px;
 }
 
 .modal-content {
@@ -474,53 +499,65 @@ body {
     border-radius: 15px;
     width: 90%;
     max-width: 400px;
+    max-height: 90vh;
     position: relative;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
 }
 
-.quick-dhikr-modal h3 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: var(--primary-color);
+/* تنسيقات جديدة للمحتوى */
+.modal-description {
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    color: var(--text-color);
 }
 
 .quick-buttons {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin: 20px 0;
+    gap: 10px;
+    margin: 15px 0;
 }
 
 .quick-buttons button {
-    padding: 15px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: white;
-    cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 12px;
+    font-size: 1rem;
 }
 
-.quick-buttons button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
+/* تحسين زر الإغلاق */
 .close-modal {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    background: none;
+    top: 5px;
+    left: 5px;
+    width: 30px;
+    height: 30px;
+    background: var(--primary-color);
+    color: white;
     border: none;
-    font-size: 24px;
-    color: var(--text-color);
+    border-radius: 50%;
+    font-size: 20px;
     cursor: pointer;
-    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.close-modal:hover {
-    color: var(--primary-color);
+/* تنسيقات خاصة للموبايل */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 20px 15px;
+        margin: 10px;
+        max-height: 80vh;
+    }
+
+    .quick-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-buttons button {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
 }
 
 .dhikr-progress {
