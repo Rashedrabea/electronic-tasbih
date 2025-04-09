@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // تهيئة البيانات
   const stats = JSON.parse(localStorage.getItem("dhikrStats") || "{}");
-  const settings = JSON.parse(localStorage.getItem("settings") || "{}");
+  const يsettings = JSON.parse(localStorage.getItem("settings") || "{}");
 
   // تحديث الإحصائيات
   updateStats();
@@ -19,33 +19,108 @@ document.addEventListener("DOMContentLoaded", function () {
       addNewDhikr(text, type);
     });
 
-  function updateStats() {
-    document.getElementById("totalDhikr").textContent = Object.values(
-      stats
-    ).reduce((a, b) => a + b, 0);
-
-    document.getElementById("activeDays").textContent =
-      localStorage.getItem("activeDays") || "0";
-
-    updateTopDhikrs();
+    function updateStats() {
+      const stats = JSON.parse(localStorage.getItem("dhikrStats") || "{}");
+      
+      // حذف المكرر من الإحصائيات
+      const uniqueStats = {};
+      Object.entries(stats).forEach(([key, value]) => {
+          const normalizedKey = key.trim();
+          if (!uniqueStats[normalizedKey]) {
+              uniqueStats[normalizedKey] = value;
+          }
+      });
+  
+      // تحديث الإحصائيات في localStorage
+      localStorage.setItem("dhikrStats", JSON.stringify(uniqueStats));
+  
+      // تحديث العرض
+      document.getElementById("totalDhikr").textContent = 
+          Object.values(uniqueStats).reduce((a, b) => a + b, 0);
+  
+      document.getElementById("activeDays").textContent =
+          localStorage.getItem("activeDays") || "0";
+  
+      updateTopDhikrs(uniqueStats);
   }
 
-  function updateTopDhikrs() {
-    const topDhikrs = Object.entries(stats)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5);
+  function addNewDhikr(text, type) {
+    if (!text || !type) {
+        alert("الرجاء إدخال جميع البيانات المطلوبة");
+        return false;
+    }
+
+    try {
+        const stats = JSON.parse(localStorage.getItem("dhikrStats") || "{}");
+        const normalizedText = text.trim();
+        
+        // التحقق من وجود الذكر
+        const isDuplicate = Object.keys(stats).some(key => 
+            key.trim().toLowerCase() === normalizedText.toLowerCase()
+        );
+
+        if (isDuplicate) {
+            alert("هذا الذكر موجود بالفعل");
+            return false;
+        }
+
+        // إضافة الذكر الجديد
+        stats[normalizedText] = 0;
+        localStorage.setItem("dhikrStats", JSON.stringify(stats));
+        updateStats();
+        
+        // تنظيف النموذج
+        document.getElementById("dhikrText").value = "";
+        document.getElementById("dhikrType").value = "";
+        
+        alert("تمت إضافة الذكر بنجاح");
+        return true;
+
+    } catch (error) {
+        console.error("خطأ في إضافة الذكر:", error);
+        alert("حدث خطأ أثناء إضافة الذكر");
+        return false;
+    }
+}
+
+  // إضافة هذا الكود في نهاية DOMContentLoaded event listener
+document.getElementById("cleanupButton")?.addEventListener("click", function() {
+  if (confirm("هل أنت متأكد من تنظيف البيانات المكررة؟")) {
+      if (cleanupDuplicateData()) {
+          alert("تم تنظيف البيانات المكررة بنجاح");
+      }
+  }
+});
+
+
+  function updateTopDhikrs(stats) {
+    const uniqueEntries = new Map();
+    
+    // تجميع المدخلات المتشابهة
+    Object.entries(stats).forEach(([dhikr, count]) => {
+        const normalizedDhikr = dhikr.trim();
+        if (uniqueEntries.has(normalizedDhikr)) {
+            uniqueEntries.set(normalizedDhikr, 
+                uniqueEntries.get(normalizedDhikr) + count);
+        } else {
+            uniqueEntries.set(normalizedDhikr, count);
+        }
+    });
+
+    const topDhikrs = Array.from(uniqueEntries.entries())
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
 
     const container = document.getElementById("topDhikrs");
     container.innerHTML = topDhikrs
-      .map(
-        ([dhikr, count]) =>
-          `<div class="top-dhikr">
-                    <span>${dhikr}</span>
-                    <span>${count}</span>
-                </div>`
-      )
-      .join("");
-  }
+        .map(([dhikr, count]) => `
+            <div class="top-dhikr">
+                <span>${dhikr}</span>
+                <span>${count}</span>
+            </div>
+        `).join("");
+}
+
 
   function loadSettings() {
     // إعدادات التطبيق
